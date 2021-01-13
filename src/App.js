@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { CryptoCurrenciesContext, dispatchCryptoCurrencies } from "./context/CryptoCurrenciesContext";
+import { Route, Switch } from "react-router-dom";
+import CryptoCurrencies from "./components/CryptoCurrencies";
+import "./stylesheets/App.scss";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    cryptoCurrencies: [],
+    dispatchCustomer: dispatchCryptoCurrencies.bind(this),
+  };
+  render() {
+  
+    return (
+      <CryptoCurrenciesContext.Provider value={this.state}>
+      <Switch>
+        <Route exact path="/" component={CryptoCurrencies} />
+      </Switch>
+      </CryptoCurrenciesContext.Provider>
+    );
+  }
 }
 
 export default App;
