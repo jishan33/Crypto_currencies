@@ -1,21 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
-function dispatchCryptoCurrencies(action, value) {
-  switch (action) {
-    case "populateCryptoCurrencies":
-      this.setState({ cryptoCurrencies: value });
-      break;
-    case "search":
-      this.setState({ search: value });
-      break;
-    default:
-      console.log("In CryptoCurrencies Context");
-  }
-}
 
-const CryptoCurrenciesContext = React.createContext({
-  cryptoCurrencies: [],
-  dispatchCryptoCurrencies: () => {},
-});
+const CryptoCurrenciesContext = React.createContext([{}, () => {}]);
 
-export { CryptoCurrenciesContext, dispatchCryptoCurrencies };
+const CryptoCurrenciesProvider = (props) => {
+  const [state, setState] = useState({});
+  return (
+    <CryptoCurrenciesContext.Provider value={[state, setState]}>
+      {props.children}
+    </CryptoCurrenciesContext.Provider>
+  );
+};
+
+export { CryptoCurrenciesContext, CryptoCurrenciesProvider };

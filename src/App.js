@@ -1,24 +1,18 @@
-import React, { Component } from "react";
-import { CryptoCurrenciesContext, dispatchCryptoCurrencies } from "./context/CryptoCurrenciesContext";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
-import CryptoCurrencies from "./components/CryptoCurrencies";
+import { CryptoCurrenciesProvider } from "./context/CryptoCurrenciesContext";
+import CryptoCurrencies from './components/CryptoCurrencies';
 import "./stylesheets/App.scss";
 
-class App extends Component {
-  state = {
-    cryptoCurrencies: [],
-    dispatchCustomer: dispatchCryptoCurrencies.bind(this),
-  };
-  render() {
+const App = () => {
   
-    return (
-      <CryptoCurrenciesContext.Provider value={this.state}>
+  return (
+    <CryptoCurrenciesProvider>
       <Switch>
         <Route exact path="/" component={CryptoCurrencies} />
       </Switch>
-      </CryptoCurrenciesContext.Provider>
-    );
-  }
-}
+    </CryptoCurrenciesProvider>
+  );
+};
 
 export default App;
