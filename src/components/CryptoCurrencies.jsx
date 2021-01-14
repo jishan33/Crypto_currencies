@@ -9,10 +9,17 @@ const CryptoCurrencies = (props) => {
   const [state, setState] = useContext(CryptoCurrenciesContext);
   const [cryptoCurrencies, setCryptoCurrencies] = useState([]);
   const [showInfo, setShowInfo] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(
+    new Date("2019-12-04T00:00:00")
+  );
+
   const getCryptoCurrencies = async (display) => {
     try {
-      const response = await fetch("http://localhost:5000/crypto_currencies");
+      const date = formattedDate(selectedDate);
+
+      const response = await fetch(
+        `http://localhost:5000/crypto_currencies?date=${date}`
+      );
       const data = await response.json();
       await setCryptoCurrencies(data);
       await setShowInfo(display);
@@ -21,23 +28,9 @@ const CryptoCurrencies = (props) => {
       console.error(e);
     }
   };
-  const renderCryptoCurrencies = () => {
-    return cryptoCurrencies.map((data, index) => {
-      return (
-        <tbody key={data._id}>
-          <tr>
-            <td>{index + 1}</td>
-            <td>{data.Currency}</td>
-            <td>{(Number(data.Open) - Number(data.Close)).toFixed(2)}</td>
 
-            <td>{formattedDate(data.Date)}</td>
-          </tr>
-        </tbody>
-      );
-    });
-  };
   const formattedDate = (date, addDays) => {
-    let response = moment(date).format("YYYY-MM-DD");
+    let response = moment(date).startOf("date").format("YYYY-MM-DD");
     if (addDays) {
       const afterDate = moment(date, "DD-MM-YYY").add(addDays, "day")._d;
       response = moment(afterDate).format("YYYY-MM-DD");
@@ -45,29 +38,30 @@ const CryptoCurrencies = (props) => {
     return response;
   };
 
-  const oneDayDifference = () => {
+  const renderCryptoCurrencies = () => {
     return cryptoCurrencies.map((data, index) => {
-      if (formattedDate(data.Date) === formattedDate(selectedDate)) {
-        return (
-          <tbody key={data._id}>
-            <tr>
-              <td>{index + 1}</td>
-              <td>{data.Currency}</td>
-              <td>{"$ " + data.Close}</td>
-              <td>{data.Currency}</td>
+      console.log(formattedDate(selectedDate));
 
-              <td>{(Number(data.Open) - Number(data.Close)).toFixed(2)}</td>
-
-              <td>{formattedDate(data.Date)}</td>
-            </tr>
-          </tbody>
-        );
-      } else return <tbody key={data._id}></tbody>;
+      return (
+        <tbody key={data._id}>
+          <tr>
+            <td>{index + 1}</td>
+            <td>{data.Currency}</td>
+            <td>{"$ " + data.Close}</td>
+            <td>{data["24h"]}</td>
+            <td>{data["7d"]}</td>
+            <td>{data.Volume}</td>
+            <td>{data["Market Cap"]}</td>
+            <td>{data.Date}</td>
+          </tr>
+        </tbody>
+      );
     });
   };
 
   return (
     <div>
+      <p>Australian Eastern Standard Time (AEST)</p>
       <DatePicker
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
@@ -93,7 +87,7 @@ const CryptoCurrencies = (props) => {
               <th>Date</th>
             </tr>
           </thead>
-          {oneDayDifference()}
+          {renderCryptoCurrencies()}
         </table>
       )}
     </div>
