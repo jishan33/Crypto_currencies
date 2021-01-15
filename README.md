@@ -1,3 +1,5 @@
+# Crypto Currencies Client
+
 ## See Also
 Backend available [here](https://github.com/jishan33/Crypto_currencies_server)
 
@@ -8,12 +10,6 @@ Backend available [here](https://github.com/jishan33/Crypto_currencies_server)
  - `npm install` to install dependencies
  - `npm test` to run tests
  - `npm start` starts the app (note: assumes [backend](https://github.com/jishan33/Crypto_currencies_server) is running)
-
-## To Run The Project
-
-### Pre-requisite Tools
- - [MongoDB](https://www.mongodb.com/) (v4.4.2)
-
 
 ## Key Libraries Used
  - [React](https://reactjs.org/) Front end framework
