@@ -1,8 +1,21 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import App from "./App";
+import { shallow, mount } from "enzyme";
+import { render } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+import CryptoCurrencies from "./components/CryptoCurrencies";
+
+describe("rendering components", () => {
+  it("renders App component without crashing", () => {
+    shallow(<App />);
+  });
+});
+
+test("readers routers", () => {
+  const content = render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
 });

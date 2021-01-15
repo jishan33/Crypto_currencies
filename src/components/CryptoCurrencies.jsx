@@ -16,7 +16,6 @@ const CryptoCurrencies = (props) => {
   const getCryptoCurrencies = async (display) => {
     try {
       const date = formattedDate(selectedDate);
-
       const response = await fetch(
         `http://localhost:5000/crypto_currencies?date=${date}`
       );
@@ -40,8 +39,6 @@ const CryptoCurrencies = (props) => {
 
   const renderCryptoCurrencies = () => {
     return cryptoCurrencies.map((data, index) => {
-      console.log(formattedDate(selectedDate));
-
       return (
         <tbody key={data._id}>
           <tr>
@@ -63,14 +60,16 @@ const CryptoCurrencies = (props) => {
     <div>
       <p>Australian Eastern Standard Time (AEST)</p>
       <DatePicker
+        className= "date-picker"
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
       />
       <button
         onClick={() => getCryptoCurrencies(!showInfo)}
         className="btn btn-info m-5"
+        type="button"
       >
-        Show Crypto Currencies Data
+        Show Crypto Currencies Data from selected date
       </button>
 
       {showInfo && (

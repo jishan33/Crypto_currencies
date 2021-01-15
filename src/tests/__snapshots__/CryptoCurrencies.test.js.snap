@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CryptoCurrencies  snapshot renders 1`] = `
+<div>
+  <p>
+    Australian Eastern Standard Time (AEST)
+  </p>
+  <div
+    className="react-datepicker-wrapper"
+  >
+    <div
+      className="react-datepicker__input-container"
+    >
+      <input
+        className="date-picker"
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        readOnly={false}
+        type="text"
+        value="12/04/2019"
+      />
+    </div>
+  </div>
+  <button
+    className="btn btn-info m-5"
+    onClick={[Function]}
+    type="button"
+  >
+    Show Crypto Currencies Data from selected date
+  </button>
+</div>
+`;
