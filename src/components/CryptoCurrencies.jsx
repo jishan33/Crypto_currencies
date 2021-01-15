@@ -57,8 +57,8 @@ const CryptoCurrencies = (props) => {
   };
 
   return (
-    <div>
-      <p>Australian Eastern Standard Time (AEST)</p>
+    <div className="ml-5 mt-5">
+   
       <DatePicker
         className= "date-picker"
         selected={selectedDate}
