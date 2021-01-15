@@ -8,10 +8,21 @@ import "react-datepicker/dist/react-datepicker.css";
 const CryptoCurrencies = (props) => {
   const [state, setState] = useContext(CryptoCurrenciesContext);
   const [cryptoCurrencies, setCryptoCurrencies] = useState([]);
-  const [showInfo, setShowInfo] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
     new Date("2019-12-04T00:00:00")
   );
+
+    const formattedDate = (date, addDays) => {
+    let response = moment(date).startOf("date").format("YYYY-MM-DD");
+    if (addDays) {
+      const afterDate = moment(date, "DD-MM-YYY").add(addDays, "day")._d;
+      response = moment(afterDate).format("YYYY-MM-DD");
+    }
+    return response;
+  };
+
+  const loadedDate = state && state.length > 0 && state[0].Date;
+  const showInfo = formattedDate(loadedDate) === formattedDate(selectedDate);
 
   const getCryptoCurrencies = async (display) => {
     try {
@@ -21,20 +32,10 @@ const CryptoCurrencies = (props) => {
       );
       const data = await response.json();
       await setCryptoCurrencies(data);
-      await setShowInfo(display);
       await setState(data);
     } catch (e) {
       console.error(e);
     }
-  };
-
-  const formattedDate = (date, addDays) => {
-    let response = moment(date).startOf("date").format("YYYY-MM-DD");
-    if (addDays) {
-      const afterDate = moment(date, "DD-MM-YYY").add(addDays, "day")._d;
-      response = moment(afterDate).format("YYYY-MM-DD");
-    }
-    return response;
   };
 
   const renderCryptoCurrencies = () => {
@@ -47,9 +48,9 @@ const CryptoCurrencies = (props) => {
             <td>{"$ " + data.Close}</td>
             <td>{data["24h"]}</td>
             <td>{data["7d"]}</td>
+            <td>{data["1m"]}</td>
             <td>{data.Volume}</td>
             <td>{data["Market Cap"]}</td>
-            <td>{data.Date}</td>
           </tr>
         </tbody>
       );
@@ -58,14 +59,13 @@ const CryptoCurrencies = (props) => {
 
   return (
     <div className="ml-5 mt-5">
-   
       <DatePicker
-        className= "date-picker"
+        className="date-picker"
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
       />
       <button
-        onClick={() => getCryptoCurrencies(!showInfo)}
+        onClick={getCryptoCurrencies}
         className="btn btn-info m-5"
         type="button"
       >
@@ -79,11 +79,11 @@ const CryptoCurrencies = (props) => {
               <th>#</th>
               <th>Coin</th>
               <th>Price</th>
-              <th>24h</th>
-              <th>7d</th>
+              <th>24 Hours</th>
+              <th>7 Days</th>
+              <th>1 Month</th>
               <th>24h Volume</th>
               <th>Mkt Cap</th>
-              <th>Date</th>
             </tr>
           </thead>
           {renderCryptoCurrencies()}
