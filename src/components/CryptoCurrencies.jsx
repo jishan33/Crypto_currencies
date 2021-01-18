@@ -13,7 +13,7 @@ const CryptoCurrencies = (props) => {
   );
 
     const formattedDate = (date, addDays) => {
-    let response = moment(date).startOf("date").format("YYYY-MM-DD");
+    let response = moment(date, "YYYY-MM-DD").format("YYYY-MM-DD");
     if (addDays) {
       const afterDate = moment(date, "DD-MM-YYY").add(addDays, "day")._d;
       response = moment(afterDate).format("YYYY-MM-DD");
@@ -51,6 +51,8 @@ const CryptoCurrencies = (props) => {
             <td>{data["1m"]}</td>
             <td>{data.Volume}</td>
             <td>{data["Market Cap"]}</td>
+            <td>{data.Date}</td>
+
           </tr>
         </tbody>
       );
