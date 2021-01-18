@@ -51,7 +51,7 @@ const CryptoCurrencies = (props) => {
             <td>{data["1m"]}</td>
             <td>{data.Volume}</td>
             <td>{data["Market Cap"]}</td>
-            <td>{data.Date}</td>
+           
 
           </tr>
         </tbody>
