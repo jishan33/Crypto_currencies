@@ -1,18 +1,18 @@
-import React, { useState, useContext } from "react";
-import { CryptoCurrenciesContext } from ".././context/CryptoCurrenciesContext";
+import React, { useState } from "react";
+// import { CryptoCurrenciesContext } from ".././context/CryptoCurrenciesContext";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 const CryptoCurrencies = (props) => {
-  const [state, setState] = useContext(CryptoCurrenciesContext);
+  // const [state, setState] = useContext(CryptoCurrenciesContext);
   const [cryptoCurrencies, setCryptoCurrencies] = useState([]);
   const [selectedDate, setSelectedDate] = useState(
     new Date("2019-12-04T00:00:00")
   );
 
-    const formattedDate = (date, addDays) => {
+  const formattedDate = (date, addDays) => {
     let response = moment(date, "YYYY-MM-DD").format("YYYY-MM-DD");
     if (addDays) {
       const afterDate = moment(date, "DD-MM-YYY").add(addDays, "day")._d;
@@ -21,22 +21,24 @@ const CryptoCurrencies = (props) => {
     return response;
   };
 
-  const loadedDate = state && state.length > 0 && state[0].Date;
-  const showInfo = formattedDate(loadedDate) === formattedDate(selectedDate);
-
-  const getCryptoCurrencies = async (display) => {
+  const getCryptoCurrencies = async () => {
     try {
       const date = formattedDate(selectedDate);
       const response = await fetch(
         `http://localhost:5000/crypto_currencies?date=${date}`
       );
       const data = await response.json();
+
       await setCryptoCurrencies(data);
-      await setState(data);
+      // await setState(data);
     } catch (e) {
       console.error(e);
     }
   };
+
+  const loadedDate =
+    cryptoCurrencies && cryptoCurrencies.length > 0 && cryptoCurrencies[0].Date;
+  const showInfo = formattedDate(loadedDate) === formattedDate(selectedDate);
 
   const renderCryptoCurrencies = () => {
     return cryptoCurrencies.map((data, index) => {
@@ -51,8 +53,6 @@ const CryptoCurrencies = (props) => {
             <td>{data["1m"]}</td>
             <td>{data.Volume}</td>
             <td>{data["Market Cap"]}</td>
-           
-
           </tr>
         </tbody>
       );

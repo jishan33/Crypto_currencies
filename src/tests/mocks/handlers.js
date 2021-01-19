@@ -2,7 +2,9 @@ import { rest } from "msw";
 
 export const handlers = [
   rest.get("http://localhost:5000/crypto_currencies", (request, response, context) => {
-    if(request.url.search.startsWith('?date=')) {
+    if(request.url.search.startsWith('?date=')) {  
+     
+      
       return response(context.status(200), context.json(goodResponse));
     } else {
       return response(context.status(400))
