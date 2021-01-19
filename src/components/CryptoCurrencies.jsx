@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-// import { CryptoCurrenciesContext } from ".././context/CryptoCurrenciesContext";
+import React, { useState, useContext } from "react";
+import { CryptoCurrenciesContext } from ".././context/CryptoCurrenciesContext";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
 import "react-datepicker/dist/react-datepicker.css";
 
 const CryptoCurrencies = (props) => {
-  // const [state, setState] = useContext(CryptoCurrenciesContext);
+  const [context, setContext] = useContext(CryptoCurrenciesContext);
   const [cryptoCurrencies, setCryptoCurrencies] = useState([]);
   const [selectedDate, setSelectedDate] = useState(
     new Date("2019-12-04T00:00:00")
@@ -30,7 +30,7 @@ const CryptoCurrencies = (props) => {
       const data = await response.json();
 
       await setCryptoCurrencies(data);
-      // await setState(data);
+      await setContext(data);
     } catch (e) {
       console.error(e);
     }
@@ -39,6 +39,8 @@ const CryptoCurrencies = (props) => {
   const loadedDate =
     cryptoCurrencies && cryptoCurrencies.length > 0 && cryptoCurrencies[0].Date;
   const showInfo = formattedDate(loadedDate) === formattedDate(selectedDate);
+
+
 
   const renderCryptoCurrencies = () => {
     return cryptoCurrencies.map((data, index) => {

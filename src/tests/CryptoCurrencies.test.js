@@ -34,7 +34,7 @@ describe("Test Button component", () => {
 
     button.simulate("click");
 
-    await waitFor(700);
+    await waitFor(200);
 
     const tables = wrapper.find("tbody");
     expect(tables).toHaveLength(2);
